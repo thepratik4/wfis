@@ -2,7 +2,12 @@
 
 import React, { useCallback, useEffect, useState } from "react";
 import { AlertCircle, RefreshCw } from "lucide-react";
-import SidebarNav from "@/components/SidebarNav";
+import { AppSidebar } from "@/components/AppSidebar";
+import {
+  SidebarInset,
+  SidebarProvider,
+  SidebarTrigger,
+} from "@/components/ui/sidebar";
 import GlobalFilterBar from "@/components/GlobalFilterBar";
 import OverviewView from "@/components/OverviewView";
 import ForecastExplorerView from "@/components/ForecastExplorerView";
@@ -218,9 +223,9 @@ export default function DashboardShell() {
     null;
 
   return (
-    <div className="min-h-screen bg-slate-50 text-slate-900 flex flex-col lg:flex-row">
-      {/* Left Sidebar Navigation */}
-      <SidebarNav
+    <SidebarProvider defaultOpen={true}>
+      {/* Fixed Stagnant Sidebar Navigation */}
+      <AppSidebar
         activeSection={activeSection}
         onSelectSection={setActiveSection}
         dataMode={filters.dataMode}
@@ -229,16 +234,19 @@ export default function DashboardShell() {
         backendVersion={health?.version}
       />
 
-      {/* Main Content Area */}
-      <div className="flex-1 min-w-0 flex flex-col">
-        {/* Top Bar Contract: Zone 1 Breadcrumb — Zone 2 Quick Links — Zone 3 Primary Action */}
-        <header className="bg-white border-b border-slate-200 px-6 py-3 flex items-center justify-between gap-8">
-          <div className="text-sm font-medium text-slate-800 whitespace-nowrap shrink-0">
-            <span className="text-slate-500">UK National Grid (BMRS)</span>
-            <span className="mx-2 text-slate-300">/</span>
-            <span className="font-semibold text-slate-900">
-              {SECTION_LABELS[activeSection]}
-            </span>
+      {/* Main Scrollable Content Inset */}
+      <SidebarInset>
+        {/* Top Bar Contract: Zone 1 Breadcrumb & Sidebar Trigger — Zone 2 Quick Links — Zone 3 Primary Action */}
+        <header className="sticky top-0 z-20 bg-white/95 backdrop-blur-xs border-b border-slate-200 px-6 py-3 flex items-center justify-between gap-4">
+          <div className="flex items-center gap-3">
+            <SidebarTrigger />
+            <div className="text-sm font-medium text-slate-800 whitespace-nowrap shrink-0">
+              <span className="text-slate-500">UK National Grid (BMRS)</span>
+              <span className="mx-2 text-slate-300">/</span>
+              <span className="font-semibold text-slate-900">
+                {SECTION_LABELS[activeSection]}
+              </span>
+            </div>
           </div>
 
           <nav
@@ -424,7 +432,7 @@ export default function DashboardShell() {
             <code className="font-mono">WINDFOR</code>
           </div>
         </footer>
-      </div>
-    </div>
+      </SidebarInset>
+    </SidebarProvider>
   );
 }

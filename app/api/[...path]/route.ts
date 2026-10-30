@@ -37,6 +37,7 @@ async function ensurePythonBackendRunning(): Promise<void> {
       }
 
       const rootDir = process.cwd();
+      const backendDir = path.join(rootDir, "backend");
       const isWin = process.platform === "win32";
       const venvUvicorn = isWin
         ? path.join(rootDir, ".venv", "Scripts", "uvicorn.exe")
