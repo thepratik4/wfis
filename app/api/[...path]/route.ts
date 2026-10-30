@@ -3,14 +3,22 @@ import { spawn } from "child_process";
 import path from "path";
 import fs from "fs";
 
-const BACKEND_URL = process.env.BACKEND_URL || "http://127.0.0.1:8000";
+function getBackendBaseUrl(): string {
+  const envUrl = process.env.BACKEND_URL;
+  if (envUrl) {
+    return envUrl.endsWith("/") ? envUrl.slice(0, -1) : envUrl;
+  }
+  return "http://127.0.0.1:8000";
+}
+
 let startupPromise: Promise<void> | null = null;
 
 async function isBackendHealthy(timeoutMs = 600): Promise<boolean> {
   try {
     const controller = new AbortController();
     const timer = setTimeout(() => controller.abort(), timeoutMs);
-    const res = await fetch(`${BACKEND_URL}/api/health`, {
+    const healthUrl = new URL("/api/health", getBackendBaseUrl());
+    const res = await fetch(healthUrl, {
       signal: controller.signal,
       cache: "no-store",
     });
@@ -22,6 +30,12 @@ async function isBackendHealthy(timeoutMs = 600): Promise<boolean> {
 }
 
 async function ensurePythonBackendRunning(): Promise<void> {
+  // On Vercel, serverless containers do not support long-running uvicorn child processes;
+  // backend service is managed independently via Vercel Services or external host.
+  if (process.env.VERCEL || process.env.NODE_ENV === "production" || process.env.BACKEND_URL) {
+    return;
+  }
+
   if (await isBackendHealthy(500)) {
     return;
   }
@@ -95,7 +109,8 @@ async function proxyToFastAPI(
   const { path: pathSegments } = await context.params;
   const encodedSegments = pathSegments.map((seg) => encodeURIComponent(seg));
   const search = req.nextUrl.search || "";
-  const targetUrl = `${BACKEND_URL}/api/${encodedSegments.join("/")}${search}`;
+  const relativePath = `/api/${encodedSegments.join("/")}${search}`;
+  const targetUrl = new URL(relativePath, getBackendBaseUrl());
 
   try {
     const init: RequestInit = {
