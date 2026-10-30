@@ -1,0 +1,6 @@
+{
+  "name": "Wind Forecast Intelligence",
+  "description": "UK wholesale day-ahead electricity procurement analytics platform comparing Elexon BMRS wind generation forecasts (WINDFOR) against half-hourly actuals (FUELHH) for January 2026.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
