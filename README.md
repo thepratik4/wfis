@@ -2,6 +2,8 @@
 
 Production-grade full-stack analytics platform built for a UK electricity utility to evaluate national wind power generation forecasts (`WINDFOR`) against metered actual generation (`FUELHH`) for day-ahead wholesale electricity procurement across **January 1 to January 31, 2026**.
 
+> **Live Application URL**: [https://wfis-r1x2.vercel.app/](https://wfis-r1x2.vercel.app/)
+
 ---
 
 ## 1. Business Problem & Product Overview
@@ -255,8 +257,7 @@ docker compose up --build
 2. Configure `VITE_API_BASE_URL=https://<your-backend-host>/api` (or `BACKEND_URL=https://<your-backend-host>`).
 3. Deploy and verify live communication with the Python FastAPI backend.
 
-- **Deployed Frontend URL Placeholder**: `https://wind-forecast-intelligence.vercel.app` *(manual deployment step required outside local container)*
-- **Deployed Backend URL Placeholder**: `https://wind-forecast-intelligence-api.onrender.com`
+- **Live Application URL (Vercel)**: [https://wfis-r1x2.vercel.app/](https://wfis-r1x2.vercel.app/)
 
 ---
 
