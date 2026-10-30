@@ -262,4 +262,4 @@ docker compose up --build
 
 ## 14. AI Tools Disclosure
 
-In accordance with assignment guidelines, AI-assisted software engineering tools (Google AI Studio / Gemini coding engine) were used during development to assist with boilerplate generation, Elexon BMRS endpoint schema inspection, TypeScript/Pydantic type modeling, and automated unit test scaffolding. All mathematical formulas, cutoff selection rules, and real January 2026 Elexon dataset behaviors were verified against live API responses and automated tests.
+In accordance with assignment guidelines, AI-assisted software engineering tools were used during development to assist with boilerplate generation, Elexon BMRS endpoint schema inspection, TypeScript/Pydantic type modeling, and automated unit test scaffolding. All mathematical formulas, cutoff selection rules, and real January 2026 Elexon dataset behaviors were verified against live API responses and automated tests.
