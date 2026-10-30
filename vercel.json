@@ -16,10 +16,6 @@
     "backend": {
       "root": "backend",
       "framework": "fastapi"
-    },
-    "frontend": {
-      "root": "frontend",
-      "framework": "vite"
     }
   },
   "rewrites": [
@@ -37,4 +33,3 @@
     }
   ]
 }
-
